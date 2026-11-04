@@ -1,0 +1,8 @@
+# Compilados y prerequisitos
+*.o
+*.d
+
+#Archivos temporales
+*.tmp
+*.swp
+
