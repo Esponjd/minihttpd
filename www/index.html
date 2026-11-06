@@ -1,0 +1,120 @@
+<!--
+Abstracción de un Portal Académico para presentar dentro del MiniHTTPd
+
+Cabe destacar que este html fue desarrollado en la materia de Aplicaciones Web
+y no tiene ninguna funcionalidad compleja implementada.
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Académico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="encabezado">
+        <div class="texto-encabezado">
+        <h1>Escuela Politécnica Nacional</h1>
+        <h3>E scientia hominis salus</h3>
+        </div>
+        <img src="epn-fis-logo.webp" 
+            alt="Logo EPN y FIS"
+            class="imagen-principal"
+            height="100">
+        </div>
+    </header>
+
+    <nav class="navegacion" aria-label="Menu principal">
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#cursos">Asignaturas</a></li>
+            <li><a href="#noticias">Noticias</a></li>
+            <li><a href="#contacto">Contactos</a></li>
+        </ul>
+    </nav>
+    <main>
+
+        <section id="inicio" class="bienvenida">
+            <h2> Bienvenidos a la Facultad de Ingenería en Sistemas</h2>
+            <img src="FIS.jpg" 
+                alt="FIS"
+                class="imagen-FIS">
+        </section>
+
+        <section id="cursos" class="seccion-cursos">
+            <h2>Conoce más sobre algunas de nuestas asignaturas disponibles</h2>           
+            <div class="contendor-cursos">
+                <article class="tarjeta">
+                    <h3>Interacción Humano-Computador (ISWD723)</h3>
+                    <p> La materia da una introducción al campo de la interacción humano-computadora (HCI), un campo
+                    interdisciplinario que integra la psicología cognitiva, el diseño, la informática y otros.
+                    </p>
+                    <a href="#contacto">Mas información</a>
+                </article>
+
+                <article class="tarjeta">
+                    <h3>Base de datos distribuidas (ISWD553)</h3>
+                    <p>La materia brinda los conceptos para el diseño e implementación de una base de datos distribuida para una aplicación
+                    específica.
+                    </p>
+                    <a href="#contacto">Mas información</a>
+                </article>
+
+                <article class="tarjeta">
+                    <h3>Data Mining y Machine Learning (ISWD613)</h3>
+                    <p>La materia comprende el estudio, análisis y desarrollo de modelos matemáticos y algoritmos computacionales capaces de aprender y
+                    a través de ello mejorar su capacidad predictiva con la experiencia (datos), de manera automática. 
+                    </p>
+                    <a href="#contacto">Mas información</a>
+                </article>
+
+                <article class="tarjeta">
+                    <h3>Redes de computadores II (ICCD563)</h3>
+                    <p>La materia brinda el conocimiento suficiente que les permita a los estudiantes dimensionar y diseñar redes de
+                    datos para la integración de soluciones informáticas avanzadas basadas en la convergencia de servicios. 
+                    </p>
+                    <a href="#contacto">Mas información</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="noticias" class="seccion-noticias">
+            <h2>Noticias Académicas</h2>
+            <article>
+                <h3>Nuevo colaboración con AWS</h3>
+                <p>Recientemente la FIS consiguió un convenio con la plataforma digital AWS de Amazon</p>
+                <time datetime="2026-10-15">15 de octubre de 2026</time>
+            </article>
+        </section>
+
+        <section id="contacto" class="seccion-contactos">
+            <h2>Te contactaremos</h2>
+            <p>Si deseas más información, no dudes en registrarte!</p>
+            <form action="https://httpbin.org/post" method="post">
+                <label for="nombre">Nombre Completo</label>
+                <input type="text" id="nombre" required>
+
+                <label for="correo">Correo Electronico</label>
+                <input type="text" id="correo" required>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+
+        <section>
+            <footer class= "pie-pagina">
+            <p>
+                &copy; 2026 Portal Acedémico.
+                Todos los derechos reservados
+            </p>
+            <p> Desarrollo Web-Práctica</p>
+            </footer>
+        </section>
+
+    </main>
+
+</body>
+</html>

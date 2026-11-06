@@ -1,0 +1,221 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    font-family:Arial, Helvetica, sans-serif;
+    background-color: #F4F8F8;
+    color: #1F2937;
+    line-height: 1.6;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+main{
+    max-width: 90vw;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+section{
+    margin-bottom: 40px;
+}
+
+.encabezado{
+    background: linear-gradient(
+        135deg,  #1E3A8A, #172554
+    );
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    padding: 35px 40px;
+}
+
+.encabezado h1{
+    font: 32px;
+    margin-bottom: 10px;
+}
+.encabezado p{
+    font-size: 17px;
+    margin: 0;
+}
+
+.navegacion{
+    background-color: #0F8B8D;
+    padding: 15px;
+}
+
+.navegacion ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 25px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.navegacion a {
+    display: inline-block;
+    padding: 10px 12px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.bienvenida{
+    background-color: rgb(255, 255, 255);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgb(94, 140, 129);
+}
+
+.bienvenida h2{
+    color: #172554;
+}
+
+.imagen-principal{
+    width: 20vw;
+    max-width:  250x;
+    max-height: 96px;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.imagen-FIS{
+    width: 60vw;
+    max-width:  350x;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.seccion-cursos h2{
+    text-align: left;
+    color: #172554;
+}
+
+.seccion-cursos p{
+    text-align: justify;
+}
+
+.contendor-cursos{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.tarjeta{
+    background-color: white;
+    padding: 25px;
+    border-radius:12px ;
+    box-shadow: 0 4px 10px black;
+    transition: tranform 0.3s, box-shadows 0.3s;
+}
+
+.tarjeta h3{
+    color: #1E3A8A;
+}
+
+.tarjeta p{
+    color: #374151;
+}
+
+.tarjeta:hover{
+    transform: translateX(10px);
+    transform: translateY(-10px);
+    transform: rotate(10deg);
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px black;
+    
+}
+
+.seccion-noticias{
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    border-left: 5px solid #0F8B8D;
+}
+
+.seccion-noticias article{
+    padding: 15px;
+    background-color: #DDF3F1;
+    border-radius: 8px;
+}
+
+.seccion-noticias time{
+    color: #176B6D;
+    font-size: 14px;
+}
+
+.seccion-contactos{
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 12px;
+    border-left: 5px solid #0F8B8D;
+}
+
+.seccion-contactos h2{
+    color: #172554;
+}
+
+.seccion-contactos form{
+    max-width: 600px;
+    margin: 0 auto;
+
+}
+
+.seccion-contactos label{
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.seccion-contactos input,
+.seccion-contactos textarea{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #0F8B8D;
+    text-align: left;
+}
+
+.seccion-contactos input:focus,
+.seccion-contactos textarea:focus{
+    outline: 2px solid #0F8B8D;
+    outline-offset: 1px;
+}
+
+.seccion-contactos button {
+    background-color: #1E3A8A; 
+    color: white;
+    padding: 12px 12px; border: none; border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color .3s ease, transform .3s ease;
+}
+.seccion-contactos button:hover {
+    background-color: #0F8B8D;
+    transform: scale(1.05);
+}
+
+
+.pie-pagina{
+    background-color:#172554;
+    color: #F4F8F8;
+    text-align: center;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.pie-pagina p{
+    margin: 5px 0;
+}
+
+
