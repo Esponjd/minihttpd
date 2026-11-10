@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/epoll.h>
 
 #define BUF_SIZE 1024
@@ -30,7 +31,7 @@ int passivesockTCP(const char *service, int qlen){
         return -1;
     }
 
-    //Inicializamos en -1 para pdoer capturar el error si es que se mantiene durante los if
+    //Inicializamos en -1 para poder capturar el error si es que se mantiene durante los if
 
     sfd = -1;
 
@@ -70,8 +71,8 @@ int passivesockTCP(const char *service, int qlen){
 
 int server(){
 
-    int msock, nsd, ssock, epoll_fd, num_events;
-    const char service* = "8080";
+    int msock, nsd, ssock, flags, epoll_fd, num_events;
+    const char *service = "8080";
     char buffer[1024];
     struct sockaddr_in addrClt;
     socklen_t addrCltlen;
@@ -93,7 +94,7 @@ int server(){
 
     struct epoll_event ev ={
         .events = EPOLLIN,
-        .data.fd = msock;
+        .data.fd = msock
     };
 
     struct epoll_event events [MAX_EVENTS];
@@ -122,18 +123,23 @@ int server(){
 
                     //Si epoll detecta un evento de msock, intenta aceptar la conexión del cliente
                     if(aux_fd == msock){
-
-                        //Creación del socket de comunicación con la flag SOCK_NONBLOCK para especificar que necesitamos un socket en
                         
+                        //Creación del soccket de comunicación con la flag SOCK_NONBLOCK para especificar 
+                        //el modo no bloqueante
+
                         addrCltlen = sizeof(addrClt);
 
-                        nsd = accept4(msock, (struct sockaddr *)&addrClt, &addrCltlen,SOCK_NONBLOCK);
+                        nsd = accept(msock,(struct sockaddr*)&addrClt,&addrCltlen);
 
                         if(nsd == -1){
                             perror("Error en accept");
                             exit(EXIT_FAILURE);
                         }
-                        
+
+                        //Configurar el socket de conexión como no bloqueante
+                        flags = fcntl(nsd, F_GETFL, 0);
+                        fcntl(nsd,F_SETFL, flags | O_NONBLOCK);
+
                         //Configuración del evento 
                         ev.events = EPOLLIN;
                         ev.data.fd = nsd;
@@ -151,19 +157,6 @@ int server(){
                         //Caso contrario, se procesan los eventos de los clientes
 
                         ssock = events[i].data.fd;
-                        n = read(ssock, buffer,sizeof(buffer));
-
-                        if(n<0){
-                            perror("Error al leer los datos de entrada");
-                            exit(EXIT_FAILURE);
-                            epoll_ctl(epoll_fd, EPOLL_CTL_DEL,ssock,NULL);
-                            close(ssock);
-                        }
-
-
-                    } else{
-                    
-                    //Se realiza el parsing para extaer la consulta del cliente
 
                     }
 
