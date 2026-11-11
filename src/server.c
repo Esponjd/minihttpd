@@ -71,7 +71,7 @@ int passivesockTCP(const char *service, int qlen){
 
 int server(){
 
-    int msock, nsd, ssock, flags, epoll_fd, num_events;
+    int msock, nsd, ssock,n, flags, epoll_fd, num_events;
     const char *service = "8080";
     char buffer[1024];
     struct sockaddr_in addrClt;
@@ -157,6 +157,16 @@ int server(){
                         //Caso contrario, se procesan los eventos de los clientes
 
                         ssock = events[i].data.fd;
+                        n = read(ssock, buffer,sizeof(buffer));
+
+                        if(n<0){
+                            perror("Error al realizar read");
+                            exit(EXIT_FAILURE);
+                            epoll_ctl(epoll_fd,EPOLL_CTL_DEL,ssock,NULL);
+                        } else{
+
+                            //Lógica de parsing para extaer la consulta del cliente
+                        }
 
                     }
 
