@@ -16,7 +16,9 @@ void respuesta_HTTP(int codigo_estado, char *ruta, int ssock){
 
     if(codigo_estado == 200){
         fd = abrir_archivo(ruta);
-        if (fd == -1){
+        if (fd == -2){
+            codigo_estado = 403;
+        } else if (fd == -1){
             codigo_estado = 404;
         }
     }
@@ -27,18 +29,28 @@ void respuesta_HTTP(int codigo_estado, char *ruta, int ssock){
             break;
         case 400:
             mensaje_estado = "Bad Request";
+            body = "<h1>400 Bad Request</h1>";            
+            break;
+        case 403:
+            mensaje_estado = "Forbidden";
+            body = "<h1>403 Forbidden</h1>";
             break;
         case 404:
             mensaje_estado = "Not Found";
+            body = "<h1>404 Not Found</h1>";
             break;
         case 405:
             mensaje_estado = "Method Not Allowed";
+            body = "<h1>405 Method Not Allowed</h1>";
             break;
         case 505:
             mensaje_estado = "HTTP Version Not Supported";
+            body = "<h1>505 HTTP Version Not Supported</h1>";
+            break;
         default:
             codigo_estado = 500;
             mensaje_estado = "Internal Server Error";
+            body = "<h1>500 Internal Server Error</h1>";
             break;
     }  
      
@@ -57,14 +69,16 @@ void respuesta_HTTP(int codigo_estado, char *ruta, int ssock){
             close(fd);
 
         } else {
-            content_type = "text.html";
+            content_type = "text/html";
             snprintf(header, sizeof(header),
                     "HTTP/1.1 %d %s\r\n"
                     "Content-Type: %s\r\n"
+                    "Content-Length: %zu\r\n"
                     "Connection: close\r\n\r\n"
-                    ,codigo_estado, mensaje_estado, content_type);
+                    ,codigo_estado, mensaje_estado, content_type, strlen(body));
 
             write(ssock, header, strlen(header));
+            write(ssock, body, strlen(body));
 
         }
     }

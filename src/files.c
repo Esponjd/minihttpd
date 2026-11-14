@@ -9,11 +9,11 @@ int abrir_archivo(char *ruta){
     int fd_archivo;
     char path_archivo[512];
 
-    if(ruta == NULL || ruta[0] != '/'){
-        return -1;
+    if(ruta == NULL || ruta[0] != '/' || strstr(ruta,"..") != NULL){
+        return -2;
     }
-
-    int n = snprintf(path_archivo, sizeof(path_archivo),"www%s",ruta);
+   
+    snprintf(path_archivo, sizeof(path_archivo),"./www%s",ruta);
 
     fd_archivo = open(path_archivo, O_RDONLY);
     if (fd_archivo == -1){
