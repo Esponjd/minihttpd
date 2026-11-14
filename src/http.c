@@ -38,11 +38,13 @@ void respuesta_HTTP(int codigo_estado, char *ruta, int ssock){
             break;
         case 505:
             mensaje_estado = "HTTP Version Not Supported";
+            break;
         default:
             codigo_estado = 500;
             mensaje_estado = "Internal Server Error";
             break;
-        
+    }  
+     
         if(codigo_estado == 200){
             content_type = obtener_mime(ruta);
             snprintf(header, sizeof(header), "HTTP/1.1 %d %s \r\n"
@@ -69,7 +71,6 @@ void respuesta_HTTP(int codigo_estado, char *ruta, int ssock){
 
         }
     }
-}
 
 int parsing_HTTP(char *bufRequest, int ssock){
 

@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/epoll.h>
+#include "http.h"
 
 #define BUF_SIZE 1024
 #define QLEN 30
@@ -165,7 +166,10 @@ int server(){
                             epoll_ctl(epoll_fd,EPOLL_CTL_DEL,ssock,NULL);
                         } else{
 
-                            //Lógica de parsing para extaer la consulta del cliente
+                            buffer[n] = '\0';
+                            parsing_HTTP(buffer, ssock);
+                            epoll_ctl(epoll_fd,EPOLL_CTL_DEL,ssock,NULL);
+                            close(ssock);     
                         }
 
                     }
