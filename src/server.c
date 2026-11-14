@@ -40,11 +40,15 @@ int passivesockTCP(const char *service, int qlen){
         
         if (sfd == -1)
             continue;
+
+        int opt = 1;
+        setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
         
         printf("FD del server: %d\n", sfd);
 
         if (bind(sfd, aux_res->ai_addr,aux_res->ai_addrlen) == -1){
             close(sfd);
+            sfd = -1;
             continue;
         }
 
