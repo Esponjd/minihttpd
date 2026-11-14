@@ -16,8 +16,6 @@ void respuesta_HTTP(int codigo_estado, char *ruta, int ssock){
 
     if(codigo_estado == 200){
         fd = abrir_archivo(ruta);
-
-        //Si no se logró obtener el archivo, retornamos el código de estado 404 (Not Found) 
         if (fd == -1){
             codigo_estado = 404;
         }
@@ -38,7 +36,6 @@ void respuesta_HTTP(int codigo_estado, char *ruta, int ssock){
             break;
         case 505:
             mensaje_estado = "HTTP Version Not Supported";
-            break;
         default:
             codigo_estado = 500;
             mensaje_estado = "Internal Server Error";
@@ -80,16 +77,13 @@ int parsing_HTTP(char *bufRequest, int ssock){
     int codigo_estado = 200;
 
     if (sscanf(bufRequest, "%15s %255s %15s", metodo, ruta, version) != 3){
-        // Si no se logró obtener los tres elementos de la request-line, retornamos el código de estado 400 (Bad request)
         codigo_estado = 400;
     }
     
-    //Si el metodo proporcionado no es GET, retornamos el código de estado 405 (Method Not Allowed)
     if(strcmp(metodo,"GET") != 0){
         codigo_estado = 405;
     }
 
-    //Si la versión de HTTP no es 1.1, retornamos el código de estado 505 (HTTP version not supported)
     if(strcmp(version,"HTTP/1.1") != 0){
         codigo_estado = 505;
     }

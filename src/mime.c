@@ -2,10 +2,8 @@
 
 const char* obtener_mime(char *ruta){
 
-    //Buscamos el último punto de la ruta, para referenciarnos a la extensión del archivo
     const char *ext = strrchr(ruta,'.');
 
-    //Si no tiene una extensión se devuelve un flujo de bytes
     if(ext == NULL){
         return "application/octet-stream";
     }
@@ -24,8 +22,6 @@ const char* obtener_mime(char *ruta){
 
     if(strcmp(ext, ".jpg") == 0)
         return "image/jpg";
-
-    //Si es una extensión desconocida, se devuelve un flujo de bytes.
 
     return "application/octet-stream";
 }

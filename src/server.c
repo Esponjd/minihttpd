@@ -20,9 +20,9 @@ int passivesockTCP(const char *service, int qlen){
     struct addrinfo *result, *aux_res;
 
     memset(&hints,0,sizeof(hints));
-    hints.ai_family = AF_UNSPEC;  //Se permite IPV4 o IPV6
+    hints.ai_family = AF_UNSPEC; 
     hints.ai_socktype = SOCK_STREAM;
-    hints.ai_protocol = 0;  //0 Indica que el sistema operativo escoge el protocolo      
+    hints.ai_protocol = 0;      
     hints.ai_flags = AI_PASSIVE;
 
     s = getaddrinfo(NULL,service,&hints,&result);
@@ -32,13 +32,9 @@ int passivesockTCP(const char *service, int qlen){
         return -1;
     }
 
-    //Inicializamos en -1 para poder capturar el error si es que se mantiene durante los if
-
     sfd = -1;
 
     for(aux_res = result; aux_res != NULL; aux_res = aux_res->ai_next){
-
-        //Se añade la flag SOCK_NONBLOCK para especificar el modo del socket (no bloqueante)
 
         sfd = socket(aux_res->ai_family,aux_res->ai_socktype | SOCK_NONBLOCK, aux_res->ai_protocol);    
         
@@ -81,8 +77,6 @@ int server(){
 
     msock = passivesockTCP(service,QLEN);
 
-
-    //Creación de epoll
     epoll_fd = epoll_create1(0);
 
     printf("FD de epoll:%d\n",epoll_fd);
@@ -114,19 +108,13 @@ int server(){
             perror("Error en epoll_wait");
             exit(EXIT_FAILURE);
         }
-            //Recorrer los eventos que están listos 
             for(int i=0; i<num_events;i++){
 
-                //fd auxiliar para recorrer la lista de eventos listos
                 int aux_fd = events[i].data.fd;
 
                     printf("FD actual: %d\n",aux_fd);
 
-                    //Si epoll detecta un evento de msock, intenta aceptar la conexión del cliente
                     if(aux_fd == msock){
-                        
-                        //Creación del soccket de comunicación con la flag SOCK_NONBLOCK para especificar 
-                        //el modo no bloqueante
 
                         addrCltlen = sizeof(addrClt);
 
@@ -137,11 +125,9 @@ int server(){
                             exit(EXIT_FAILURE);
                         }
 
-                        //Configurar el socket de conexión como no bloqueante
                         flags = fcntl(nsd, F_GETFL, 0);
                         fcntl(nsd,F_SETFL, flags | O_NONBLOCK);
 
-                        //Configuración del evento 
                         ev.events = EPOLLIN;
                         ev.data.fd = nsd;
 
@@ -149,21 +135,20 @@ int server(){
                             perror("Error al configurar epoll");
                             exit(EXIT_FAILURE);
                         }
-
                         printf("Nuevo cliente, FD:%d\n", nsd);
                     }
 
                     else{
 
-                        //Caso contrario, se procesan los eventos de los clientes
-
                         ssock = events[i].data.fd;
                         n = read(ssock, buffer,sizeof(buffer));
 
                         if(n<0){
+
                             perror("Error al realizar read");
                             exit(EXIT_FAILURE);
                             epoll_ctl(epoll_fd,EPOLL_CTL_DEL,ssock,NULL);
+
                         } else{
 
                             buffer[n] = '\0';
@@ -171,9 +156,7 @@ int server(){
                             epoll_ctl(epoll_fd,EPOLL_CTL_DEL,ssock,NULL);
                             close(ssock);     
                         }
-
                     }
-
             }
     }
 }

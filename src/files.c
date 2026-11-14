@@ -9,12 +9,10 @@ int abrir_archivo(char *ruta){
     int fd_archivo;
     char path_archivo[512];
 
-    //Comprobar que la ruta sea válida
     if(ruta == NULL || ruta[0] != '/'){
         return -1;
     }
 
-    //Construir la ruta para el cliente
     int n = snprintf(path_archivo, sizeof(path_archivo),"www%s",ruta);
 
     fd_archivo = open(path_archivo, O_RDONLY);
